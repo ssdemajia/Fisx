@@ -17,7 +17,22 @@ file(GLOB HEADER_FILES
 )
 file(GLOB SOURCE_FILES
     foundation/*.cpp
+    foundation/*.h
     FISX.cpp
+    FISX.h
 )
+
 add_library(FISX_LIB STATIC ${SOURCE_FILES})
-target_include_directories(FISX_LIB PUBLIC ${HEADER_FILES})
+
+foreach(_source IN ITEMS ${SOURCE_FILES})
+    if (IS_ABSOLUTE "${_source}")
+        file(RELATIVE_PATH _source_rel "${CMAKE_CURRENT_SOURCE_DIR}" "${_source}")
+    else()
+        set(_source_rel "${_source}")
+    endif()
+    get_filename_component(_source_path "${_source_rel}" PATH)
+    string(REPLACE "/" "\\" _group_path "${_source_path}")
+    source_group("${_group_path}" FILES "${_source}")
+endforeach()
+
+target_include_directories(FISX_LIB PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
