@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.10)
-
 # Remove trailing '\' and '/' at the end of the path, so can reliably compare
 STRING(REGEX REPLACE "[/\\]+$" "" CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
 STRING(REGEX REPLACE "[/\\]+$" "" CMAKE_CURRENT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -13,16 +11,20 @@ endif()
 
 file(GLOB HEADER_FILES
     foundation/*.h
+    common/*.h
     FISX.h
 )
 file(GLOB SOURCE_FILES
     foundation/*.cpp
     foundation/*.h
+    common/*.h
     FISX.cpp
     FISX.h
 )
 
 add_library(FISX_LIB STATIC ${SOURCE_FILES})
+
+target_precompile_headers(FISX_LIB PRIVATE ${SOURCE_FILES})
 
 foreach(_source IN ITEMS ${SOURCE_FILES})
     if (IS_ABSOLUTE "${_source}")
