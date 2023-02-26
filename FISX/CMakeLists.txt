@@ -12,19 +12,22 @@ endif()
 file(GLOB HEADER_FILES
     foundation/*.h
     common/*.h
+    collision/*.h
     FISX.h
 )
 file(GLOB SOURCE_FILES
     foundation/*.cpp
     foundation/*.h
     common/*.h
+    collision/*.cpp
+    collision/*.h
     FISX.cpp
     FISX.h
 )
 
 add_library(FISX_LIB STATIC ${SOURCE_FILES})
 
-target_precompile_headers(FISX_LIB PRIVATE ${SOURCE_FILES})
+target_precompile_headers(FISX_LIB PRIVATE ${HEADER_FILES})
 
 foreach(_source IN ITEMS ${SOURCE_FILES})
     if (IS_ABSOLUTE "${_source}")
