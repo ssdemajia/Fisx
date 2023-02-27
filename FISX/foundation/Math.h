@@ -98,6 +98,15 @@ namespace Fisx
             mMin -= e;
             mMax += e;
         }
+        inline bool Contain(const AABB& other)
+        {
+            return (mMin.x < other.mMin.x) &&
+                (mMin.y < other.mMin.y) &&
+                (mMin.z < other.mMin.z) &&
+                (mMax.x > other.mMax.x) &&
+                (mMax.y > other.mMax.y) &&
+                (mMax.z > other.mMax.z);
+        }
         Vector3 mMin;
         Vector3 mMax;
     };
